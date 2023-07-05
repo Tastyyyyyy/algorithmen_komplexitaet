@@ -18,60 +18,64 @@ public:
 	{
         src = s + " "; // Das Leerzeichen dient dazu, beim Lesen von Zahlen nicht 
 					   // ueber die String-Grenze zu laufen
-		goThroughString();
     }
 
 
-
-	void goThroughString()
+//selbst geschrieben ->
+	void goThroughString(char s)
 	{
 		int i = 0;
 		while(src[i] != ' ')
 		{
-			char test = src[i];
-			tokenize(test);
+			char temp = src[i];
+			tokenize(temp);
 			i++;
 		}
 	}
 
-	bool checkNum()
+	void checkSign(char tempo)
 	{
-		if(src[i] == "0" || src[i] == "1" || src[i] == "2" || src[i] == "3" || src[i] == "4" || src[i] == "5" || src[i] == "6" || src[i] == "7" || src[i] == "8" || src[i] == "9")
-		{
+		checkNum(tempo);
+	}
 
+	bool checkNum(char tempo)
+	{
+		if(tempo == '0' || tempo == '1' || tempo == '2' || tempo == '3' || tempo == '4' || tempo == '5' || tempo == '6' || tempo == '7' || tempo == '8' || tempo == '9')
+		{
+			return true;
 		}
 		else
 		{
-			checkNum();
-		}
-		else
-		{
-			checkBracket();
+			checkOp(tempo);
 		}
 	}
 	
-	bool checkOp()
+	bool checkOp(char tempo)
 	{
-		if(src[i] == "+" || src[i] == "-" || src[i] == "*" || src[i] == "/")
+		if(tempo == '+' || tempo == '-' || tempo == '*' || tempo == '/')
 		{
-
+			return true;
+		}
+		else
+		{
+			checkBracket(tempo);
 		}
 	}
 
-	bool checkBracket()
+	bool checkBracket(char tempo)
 	{
-		if(src[i] == "(" || src[i] == ")")
+		if(tempo == '(' || tempo == ')')
 		{
-
+			return true;
 		}
 	}
-    
+//	<- selbst geschrieben
+
 
     vector<Token*>* tokenize(char s) 
 	{
         vector<Token*>* tokens = new vector<Token*>();
 	    vector<Token*>::iterator i = tokens->begin();
-		tokens->push_back(s);
 		/*
 
 		Beispiel f�r das Einf�gen von Knoten:
@@ -81,11 +85,8 @@ public:
 		usw. 
 		
 		*/
-		switch()
-				{
-					case :
-					break;
-				}
+		goThroughString(s);
+		// &i->push_back(tokens);
 
 		
 		// to implement ...
