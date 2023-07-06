@@ -79,6 +79,7 @@ public:
 		switch(check)
 		{
 		case 1:	//Zahlen
+			//Hier noch testen, ob darauffolgendes Zeichen ebenfalls Zahl 
 			int zahl = temp - '0';		//char zu Integer umwandeln
 			i = tokens->insert(i, new Num(zahl));
 			break;
