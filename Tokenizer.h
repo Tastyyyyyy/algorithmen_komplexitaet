@@ -18,7 +18,7 @@ class Tokenizer 			//bearbeitet von Luca Laderer
 public:
     Tokenizer(string s) 	//Konstruktor wird mit string als Argument aufgerufen
 	{
-        src = s + " "; // Das Leerzeichen dient dazu, beim Lesen von Zahlen nicht 
+        src = s + "§"; // Das Leerzeichen dient dazu, beim Lesen von Zahlen nicht 	//-> lieber ein char wie z.B. '§' 
 					   // ueber die String-Grenze zu laufen
 		tokenize(src);
     }
@@ -49,6 +49,10 @@ public:
 		else if(tempo == '(' || tempo == ')')
 		{
 			check = 3;
+		}
+		else
+		{
+			check = 4;
 		}	
 		return check;
 	}
@@ -70,33 +74,40 @@ public:
 		usw. 
 		
 		*/
-
-		// void goThroughString(string src)
-		// {
 			int z = 0;
 			int zahl;
-			temp = src[z];
-			while(temp != ' ')
+			int nextPos;
+			while(src[z] != '§')
 			{
+				temp = src[z];
 				switch(checkSign(temp))
 				{
 				case 1:	//Zahlen
 					//Hier noch testen, ob darauffolgendes Zeichen ebenfalls Zahl 
 					zahl = temp - '0';		//char zu Integer umwandeln
+					while(checkSign(src[z+1] == 1))
+					{
+						nextPos = src[z+1] - '0';
+						zahl = (zahl*10) + nextPos;
+					}
 					i = tokens->insert(i, new Num(zahl));
+					i++;
 					break;
 				case 2:	//Operatoren
 					i = tokens->insert(i, new Op(temp));
+					i++;
 					break;
 				case 3:	//Klammern
 					i = tokens->insert(i, new Bracket(temp));
+					i++;
+					break;
+				case 4:
 					break;
 				default:
 					break;
 				}
 				z++;
 			}
-		// }
 
 		
 		// switch(checkSign(tempo))
