@@ -13,22 +13,24 @@ class Tokenizer 		//bearbeitet von Luca Laderer
  
     string src;
 	int check = 0;
+	char temp;
 
 public:
     Tokenizer(string s) 	//Konstruktor wird mit string als Argument aufgerufen
 	{
         src = s + " "; // Das Leerzeichen dient dazu, beim Lesen von Zahlen nicht 
 					   // ueber die String-Grenze zu laufen
+		tokenize(src);
     }
 
 
 //selbst geschrieben ->
-	void goThroughString(char s)
+	void goThroughString(string src)
 	{
 		int i = 0;
 		while(src[i] != ' ')
 		{
-			char temp = src[i];
+			temp = src[i];
 			checkSign(temp);
 			i++;
 		}
@@ -56,10 +58,10 @@ public:
 //	<- selbst geschrieben
 
 
-    vector<Token*>* tokenize(char s) 
+    vector<Token*>* tokenize(string src) 		//schleife in oder außerhalb von tokenize? begin() immer an ältester oder neuester Position?
 	{
         vector<Token*>* tokens = new vector<Token*>();
-	    vector<Token*>::iterator i = tokens->begin();
+	    vector<Token*>::iterator i = tokens->begin();		//hier eventuell Probleme
 		/*
 
 		Beispiel f�r das Einf�gen von Knoten:
@@ -69,16 +71,24 @@ public:
 		usw. 
 		
 		*/
-		goThroughString(s);
-		switch (check)
+		
+
+		goThroughString(src);
+
+		
+		switch(check)
 		{
 		case 1:	//Zahlen
+			int zahl = temp - '0';		//char zu Integer umwandeln
+			i = tokens->insert(i, new Num(zahl));
 			break;
 		
 		case 2:	//Operatoren
+			i = tokens->insert(i, new Op(temp));
 			break;
 
 		case 3:	//Klammern
+			i = tokens->insert(i, new Bracket(temp));
 			break;
 		}
 
