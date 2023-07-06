@@ -12,6 +12,7 @@ class Tokenizer 		//bearbeitet von Luca Laderer
 {
  
     string src;
+	int check = 0;
 
 public:
     Tokenizer(string s) 	//Konstruktor wird mit string als Argument aufgerufen
@@ -28,47 +29,30 @@ public:
 		while(src[i] != ' ')
 		{
 			char temp = src[i];
-			tokenize(temp);
+			checkSign(temp);
 			i++;
 		}
 	}
 
-	void checkSign(char tempo)
+	int checkSign(char tempo)
 	{
-		checkNum(tempo);
+		if (tempo == '0' || tempo == '1' || tempo == '2' || tempo == '3' || tempo == '4' || tempo == '5' || tempo == '6' || tempo == '7' || tempo == '8' || tempo == '9')
+		{
+			check = 1;
+			return 1;
+		}
+		else if(tempo == '+' || tempo == '-' || tempo == '*' || tempo == '/')
+		{
+			check = 2;
+			return 2;
+		}
+		else if(tempo == '(' || tempo == ')')
+		{
+			check = 3;
+			return 3;
+		}	
 	}
 
-	bool checkNum(char tempo)
-	{
-		if(tempo == '0' || tempo == '1' || tempo == '2' || tempo == '3' || tempo == '4' || tempo == '5' || tempo == '6' || tempo == '7' || tempo == '8' || tempo == '9')
-		{
-			return true;
-		}
-		else
-		{
-			checkOp(tempo);
-		}
-	}
-	
-	bool checkOp(char tempo)
-	{
-		if(tempo == '+' || tempo == '-' || tempo == '*' || tempo == '/')
-		{
-			return true;
-		}
-		else
-		{
-			checkBracket(tempo);
-		}
-	}
-
-	bool checkBracket(char tempo)
-	{
-		if(tempo == '(' || tempo == ')')
-		{
-			return true;
-		}
-	}
 //	<- selbst geschrieben
 
 
@@ -86,6 +70,18 @@ public:
 		
 		*/
 		goThroughString(s);
+		switch (check)
+		{
+		case 1:	//Zahlen
+			break;
+		
+		case 2:	//Operatoren
+			break;
+
+		case 3:	//Klammern
+			break;
+		}
+
 		// &i->push_back(tokens);
 
 		
